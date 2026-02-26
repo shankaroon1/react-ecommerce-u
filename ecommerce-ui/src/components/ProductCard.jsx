@@ -1,58 +1,94 @@
 import React from "react";
 
-export default function ProductCard({ name, price }) {
+const ProductCard = ({ product }) => {
+  const discountedPrice =
+    product.price - (product.price * product.discount) / 100;
+
   return (
     <div style={styles.card}>
-      <div style={styles.imagePlaceholder}>{name[0]}</div>
-      <h3 style={styles.name}>{name}</h3>
-      <p style={styles.price}>${price}</p>
-      <button style={styles.button}>Add to Cart</button>
+      <div style={styles.imageContainer}>
+        <img src={product.image} alt={product.name} style={styles.image} />
+        <span style={styles.discountBadge}>-{product.discount}%</span>
+      </div>
+
+      <div style={styles.details}>
+        <h4 style={styles.name}>{product.name}</h4>
+
+        <div style={styles.rating}>
+          ⭐ {product.rating}
+        </div>
+
+        <div style={styles.priceSection}>
+          <span style={styles.oldPrice}>${product.price}</span>
+          <span style={styles.newPrice}>${discountedPrice.toFixed(2)}</span>
+        </div>
+
+        <button style={styles.button}>Add to Cart</button>
+      </div>
     </div>
   );
-}
+};
 
 const styles = {
   card: {
-    border: "1px solid #ddd",
-    borderRadius: 12,
-    padding: 16,
-    width: 180,
-    textAlign: "center",
-    backgroundColor: "#f1f4f4",
-    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-    transition: "transform 0.2s",
-    cursor: "pointer",
-    marginBottom: 20,
+    backgroundColor: "#fff",
+    borderRadius: "12px",
+    overflow: "hidden",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    transition: "0.3s",
   },
-  imagePlaceholder: {
-    width: 100,
-    height: 100,
-    borderRadius: "50%",
-    backgroundColor: "#e11010", // 🌟 nice green circle
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  imageContainer: {
+    position: "relative",
+  },
+  image: {
+    width: "100%",
+    height: "250px",
+    objectFit: "cover",
+  },
+  discountBadge: {
+    position: "absolute",
+    top: "10px",
+    left: "10px",
+    backgroundColor: "red",
     color: "#fff",
-    fontWeight: "bold",
-    fontSize: 24,
-    margin: "0 auto 10px",
+    padding: "5px 10px",
+    borderRadius: "20px",
+    fontSize: "12px",
+  },
+  details: {
+    padding: "15px",
   },
   name: {
-    fontSize: 18,
-    color: "#333",
-    marginBottom: 5,
+    fontSize: "16px",
+    marginBottom: "5px",
   },
-  price: {
-    fontSize: 16,
-    color: "#e91e63", // 🌟 pink color for price
-    marginBottom: 10,
+  rating: {
+    color: "#f39c12",
+    marginBottom: "8px",
+  },
+  priceSection: {
+    display: "flex",
+    gap: "10px",
+    alignItems: "center",
+    marginBottom: "10px",
+  },
+  oldPrice: {
+    textDecoration: "line-through",
+    color: "gray",
+  },
+  newPrice: {
+    color: "red",
+    fontWeight: "bold",
   },
   button: {
-    backgroundColor: "#2196F3", // 🌟 blue button
-    color: "#fff",
+    width: "100%",
+    padding: "8px",
+    backgroundColor: "black",
+    color: "white",
     border: "none",
-    padding: "8px 12px",
-    borderRadius: 8,
+    borderRadius: "6px",
     cursor: "pointer",
   },
 };
+
+export default ProductCard
